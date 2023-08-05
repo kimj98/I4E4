@@ -6,7 +6,7 @@ To set up the development environment and install all the necessary dependencies
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/kimj98/I4E4.git
    
 2. **Navigate to the Repository Directory and Download requirements**
    ```bash
