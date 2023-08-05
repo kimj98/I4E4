@@ -1,0 +1,8 @@
+streamlit
+langchain
+transformers
+datasets
+pyton-dotenv
+pytorch
+keras
+tensorflow
