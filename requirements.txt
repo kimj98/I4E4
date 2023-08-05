@@ -2,7 +2,7 @@ streamlit
 langchain
 transformers
 datasets
-pyton-dotenv
+python-dotenv
 pytorch
 keras
 tensorflow
