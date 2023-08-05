@@ -7,5 +7,8 @@ To set up the development environment and install all the necessary dependencies
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/your-username/your-repo-name.git
-
-pip install -r requirements.txt
+   
+2. **Navigate to the Repository Directory and Download requirements**
+   ```bash
+   cd your-repo-name
+   pip install -r requirements.txt
