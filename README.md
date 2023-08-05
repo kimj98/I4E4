@@ -1,1 +1,1 @@
-![Flowchart](images/flowchart.png)
+![Flowchart](Images/flowchart.png)
