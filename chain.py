@@ -24,5 +24,5 @@ prompt2 = "write a background summary about this claim: {}"
 prompt2_content = prompt2.format(content)
 
 response = llm(prompt2_content)
-print(response)
 
+print(llm("translate this in korean {}".format(response)))

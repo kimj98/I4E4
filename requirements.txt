@@ -3,6 +3,6 @@ langchain
 transformers
 datasets
 python-dotenv
-pytorch
-keras
-tensorflow
+sentence_transformers
+
+

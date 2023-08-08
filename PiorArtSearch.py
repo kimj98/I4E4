@@ -24,8 +24,6 @@ def retrieve(prompt):
     retrieval = db.similarity_search(prompt, k =3)
     return retrieval
 
-claim = retrieve("computer sytstem")
-print(claim)
 
 
 
