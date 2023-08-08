@@ -1,7 +1,7 @@
 #이 파일은 HuggingFace에 JSON형식으로 저장되어있는 특허 데이터를 사용해서 프롬트가 주어졋을때 비슷한 문서를 갖고올수있는지 구현하는 코딩페이지
 
 from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
 from langchain.vectorstores import Chroma
 from docload import dataset_dict
 
@@ -21,8 +21,11 @@ for sample in patent_samples:
 db = Chroma.from_texts(list_texts, embedding_model)
 
 def retrieve(prompt):
-    retrieval = db.similarity_search(prompt, k =5)
+    retrieval = db.similarity_search(prompt, k =3)
     return retrieval
+
+claim = retrieve("computer sytstem")
+print(claim)
 
 
 
