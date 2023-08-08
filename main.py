@@ -24,8 +24,6 @@ class User_Input:
         self.tech_description = tech_description
 
 
-
-
 def main():
     st.title('명세서 작성 ai')
 
