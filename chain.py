@@ -11,7 +11,6 @@ def read_text_file(file_path):
     return data
 llm = OpenAI(temperature = 0.8)
 
-prompt1 = "please give me a novel invention about a gym workout machine that can help people with leg disability"
 
 #비슷한 청구 내용 갖고오기 (DB퀄리티 따라서 좋은 답변)
 patent_example = retrieve(prompt1,us_patent)
