@@ -1,7 +1,7 @@
 from dotenv import find_dotenv, load_dotenv
-import os 
 from langchain.llms import OpenAI
 from PiorArtSearch import retrieve, retrieval2text,us_patent
+import os 
 
 load_dotenv(find_dotenv()) 
 
