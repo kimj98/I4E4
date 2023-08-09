@@ -9,11 +9,6 @@ text_splitter = CharacterTextSplitter(
     chunk_overlap  = 10,
 )
 
-def read_text_file(file_path):
-    with open(file_path, 'r') as file:
-        data = file.read()
-    return data
-
 dataset_dict = load_dataset('HUPD/hupd',
     name='sample',
     data_files="https://huggingface.co/datasets/HUPD/hupd/blob/main/hupd_metadata_2022-02-22.feather", 
