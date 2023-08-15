@@ -33,7 +33,7 @@ def howtouse_page():
     st.sidebar.title("How to use")
     st.write("AI 사용방법. 사진첨부 혹은 @@ ")
 
-example_1 = Image.open('example1.jpg')
+example_1 = Image.open('./data/example1.jpg')
 
 def input_example_page():
     st.sidebar.title("Input Example")
