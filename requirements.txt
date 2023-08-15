@@ -7,3 +7,4 @@ torch
 keras
 tensorflow
 chromadb
+wikipedia-api

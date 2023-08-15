@@ -4,8 +4,8 @@
 
 import streamlit as st
 import base64
-from PiorArtSearch import retrieve
 from PIL import Image
+from chain2 import generate_output
 
 st.markdown("""
     <style>
@@ -25,14 +25,6 @@ class User_Input:
         self.tech_description = tech_description
         self.designs = designs
 
-class GPT_Output:
-    def __init__(self, patent_title, abstract, background, tech_description, claims):
-        self.patent_title = patent_title
-        self.abstract = abstract
-        self.background = background
-        self.tech_description = tech_description
-        self.claims = claims
-
 def about_page():
     st.sidebar.title("About")
     st.write("명세서 작성에 도움을 주는 ai입니다. 사용 방법은 blahblah")
@@ -49,7 +41,7 @@ def input_example_page():
 
 def download_page():
     st.title("다운로드 페이지")
-    show_pdf('모범 명세서.pdf')
+    show_pdf('./data/모범 명세서.pdf')
     st.write("완성된 명세서를 다운로드 하세요")
     st.button('PDF 다운로드')
 
@@ -87,22 +79,18 @@ def ezpatent_ai_page():
         user_input = User_Input(patent_title, patent_category, tech_description, designs)
 
         submit_button = st.form_submit_button(label='제출')
-
+    
+    
     if submit_button:
-        gpt_output = GPT_Output(
-            patent_title = "Generated Patent Title",
-            abstract = "Generated Abstract",
-            background = "Generated Background",
-            tech_description = "Generated Technology Description",
-            claims = "Generated Claims"
-        )
+        output = generate_output(user_input)
+     
 
         st.subheader("Generated Patent:")
-        st.write("Title: ", gpt_output.patent_title)
-        st.write("Abstract: ", gpt_output.abstract)
-        st.write("Background: ", gpt_output.background)
-        st.write("Technology Description: ", gpt_output.tech_description)
-        st.write("Claims: ", gpt_output.claims)
+        st.write("Title: ", user_input.patent_title)
+        st.write("Abstract: ", output.abstract)
+        st.write("Background: ", output.background)
+        st.write("Technology Description: ", output.tech_description)
+        st.write("Claims: ", output.claims)
         st.session_state.page = 'download'
 
     if "page" not in st.session_state:
