@@ -50,18 +50,21 @@ patent_samples = dataset_dict["train"][:100]["claims"]
 embedding_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 #미국 특허 예제 문서를 Split
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap = 200)
-pdf_samples = text_splitter.split_documents(pdf_documents)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap = 50)
+#pdf_samples = text_splitter.split_documents(pdf_documents)
 
-list_texts = []
-for sample in patent_samples:
+#list_texts = []
+#for sample in patent_samples:
     #Returns Document with pagecontent/ metadata 
-    split_text = text_splitter.split_text(sample)
-    list_texts.extend(split_text)
+#    split_text = text_splitter.split_text(sample)
+#    list_texts.extend(split_text)
 
 #Chroma DB에 추출할때 사용할 Embedding Model과 Split된 문서 데이터 업로드
-patent_db = Chroma.from_texts(list_texts, embedding_model)
-pdf_db = Chroma.from_documents(pdf_samples, embedding_model)
+#patent_db = Chroma.from_texts(list_texts, embedding_model)
+#pdf_db = Chroma.from_documents(pdf_samples, embedding_model)
+
+
+solar = read_txt('data')["example2.txt"]
 
 
 

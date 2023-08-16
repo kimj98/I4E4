@@ -1,6 +1,6 @@
 from dotenv import find_dotenv, load_dotenv
 from langchain.llms import OpenAI
-from dataload import retrieve, retrieval2text, patent_db
+from dataload import retrieve, retrieval2text, solar
 import os
 
 load_dotenv(find_dotenv()) 
