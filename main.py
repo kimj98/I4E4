@@ -13,20 +13,29 @@ st.markdown("""
 PATENT_CATEGORIES = ['선택','A - 생활필수품','B - 처리조작;운수','C - 화학;야금','D - 섬유;지류','E - 고정구조물','F - 기계공학;조명;가열;무기;폭파','G - 물리학','H - 전기']
 
 class User_Input:
-    def __init__(self, patent_title, patent_category, tech_description, designs, claim):
+    def __init__(self, patent_title, patent_category, tech_description, designs, claim, design_num, method_result, todo_result, background_result):
         self.patent_title = patent_title
         self.patent_category = patent_category
         self.tech_description = tech_description
         self.claim = claim
         self.designs = designs
+        self.design_num = design_num
+        self.method_result = method_result
+        self.todo_result = todo_result
+        self.background_result = background_result
 
+        
 class GPT_Output:
-    def __init__(self, patent_title, abstract, background, tech_description, claims):
+    def __init__(self, patent_title, abstract, background, tech_description, claims, design_num, method_result, todo_result, background_result):
         self.patent_title = patent_title
         self.abstract = abstract
         self.background = background
         self.tech_description = tech_description
         self.claims = claims
+        self.design_num = design_num
+        self.method_result = method_result
+        self.todo_result = todo_result
+        self.background_result = background_result
 
 def go_back():
     if st.session_state.previous_page:
@@ -47,26 +56,73 @@ def download_page():
     if st.button('뒤로가기'):
         go_back()
 
+
 def design_count_page():
-    st.title("도면도 개수")
-    st.write("도면도 개수를 입력하세요")
-    
-    with st.form(key ='design_count_form'):
+    with st.form(key='count_form'):
+        
+        st.title("도면도 개수")
+
+        design_num = st.number_input('도면 개수를 입력하세요.', min_value = 1, value = 1, step = 1)
+        
+
+        count_submit_button = st.form_submit_button(label='확인')
+        if count_submit_button:
+            st.session_state.page = 'design_input'
+            st.session_state.design_num = design_num
+    if st.button('뒤로가기'):
+        go_back()
+
+
+def design_input_page():
+    with st.form(key='design_input_form'):
+        st.title("도면도 첨부")
+        st.write("도면도 PDF 파일은 아래에 첨부해주세요")
         designs = []
-        design_num = st.number_input('도면 개수', min_value = 1, value = 1, step = 1)
-        for i in range(design_num):
+        for i in range(st.session_state.design_num):
                 design_file = st.file_uploader(f"도면도 {i+1} - pdf", type=['pdf'], key=f"design_file_{i}")
                 design_description = st.text_area(f'도면도 {i+1}에 대한 설명', key=f"design_description_{i}")
                 designs.append(design_description)
 
-        submit = st.form_submit_button("다음")
 
-        if submit:
-            st.session_state.previous_page = st.session_state.page
-            st.session_state.page = "add_pdf"
-    
-    if st.button('뒤로가기'):
-        go_back()
+        design_submit_button = st.form_submit_button(label="다음")
+        if design_submit_button:
+            st.session_state.page = 'background' # 수정요함
+
+
+def background_output_page(background_result):
+    background_result = "배경기술 완성본 수정 가능" #assign to gpt outputed 배경기술
+    with st.form(key='background_output_form'):
+        st.title("배경기술 결과물")
+        user_background = st.text_area("배경기술을 원하시는대로 수정해주세요", value=background_result)
+        
+        background_submit_button = st.form_submit_button(label='제출')
+        if background_submit_button:
+            background_result = user_background
+            st.session_state.page = 'todo'
+    return background_result
+
+def todo_page():
+    todo_result = "수정 가능한 해결하려는 과제 결과물 입니다" #assign to gpt outputed 해결하려는 과제 결과물
+    with st.form(key='todo_form'):
+        st.title("해결하려는 과제 결과물")
+        user_todo = st.text_area("해결하려는 과제 결과물을 원하시는대로 수정해주세요", value = todo_result)
+        todo_submit_button = st.form_submit_button(label='제출')
+        if todo_submit_button:
+            todo_result = user_todo
+            st.session_state.page = 'method'
+    return todo_result
+
+def method_page():
+    method_result = "수정가능한 과제해결의 수단입니다"  #assign to gpt outputed 과제해결의 수단
+    with st.form(key='method_form'):
+        st.title("과제 해결의 수단")
+        user_method = st.text_area("해결하려는 과제 결과물을 원하시는대로 수정해주세요", value=method_result)
+        
+        method_submit_button = st.form_submit_button(label='제출')
+        if method_submit_button:
+            method_result = user_method
+            st.session_state.page = 'download'
+    return method_result
 
 
 def show_pdf(file_path):
@@ -74,25 +130,6 @@ def show_pdf(file_path):
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
     pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="800" height="800" type="application/pdf"></iframe>'
     st.markdown(pdf_display, unsafe_allow_html=True)
-
-def add_pdf_page():
-    st.title("참고용 PDF")
-    st.write("추가적으로 제출할 참고용 PDF를 첨부하세요.(최대 10개)")
-    uploaded_files = []
-    
-    for i in range(10):
-        file = st.file_uploader(f"PDF 파일 {i+1} 첨부", type=["pdf"], key=f"pdf_{i+1}")
-        if file:
-            uploaded_files.append(file)
-    
-    if uploaded_files:
-        st.write(f"You have uploaded {len(uploaded_files)} files.")
-    
-    if st.button("다음"):
-        st.session_state.previous_page = st.session_state.page
-        st.session_state.page = "download"
-    if st.button('뒤로가기'):
-        go_back()
 
 def main():
     st.title('명세서 작성 ai')
@@ -102,30 +139,38 @@ def main():
         patent_category = st.selectbox('특허의 분류', PATENT_CATEGORIES)
         claim = st.text_area('청구항')
         tech_description = st.text_area('발명 내용')
+        design_num = 0
+        todo_result = ""
+        background_result = ""
+        method_result = ""
 
-        user_input = User_Input(patent_title, patent_category, claim, tech_description, [])
 
         submit_button = st.form_submit_button(label='다음')
 
     if submit_button:
         st.session_state.previous_page = st.session_state.page
         st.session_state.page = 'count'
-
-
+        st.session_state.todo_result = todo_result
+        st.session_state.method_result = method_result
 
 if __name__ == "__main__":
     if "page" in st.session_state:
         st.session_state.previous_page = st.session_state.page
-
     if "page" not in st.session_state:
         st.session_state.page = "main"
         st.session_state.previous_page = None
-
     if st.session_state.page == "main":
         main()
-    elif st.session_state.page == "download":
-        download_page()
     elif st.session_state.page == "count":
         design_count_page()
-    elif st.session_state.page == "add_pdf":
-        add_pdf_page()
+    elif st.session_state.page == "design_input":
+        design_input_page()
+    elif st.session_state.page == "background":
+        background_result = ""
+        background_result = background_output_page(background_result)
+    elif st.session_state.page == "todo":
+        todo_page()
+    elif st.session_state.page == "method":
+        method_page()
+    elif st.session_state.page == "download":
+        download_page()
