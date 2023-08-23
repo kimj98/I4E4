@@ -22,7 +22,7 @@ def generate_output(input_dict):
     abstract = llm(prompt)
     output.abstract = abstract
 
-    promt = "Write how this invention will solve existing problem and the background context of invention"
+    promt = "Write how this invention will solve existing problem and the background context of invention.Use this description: {}"
     
     return output 
     

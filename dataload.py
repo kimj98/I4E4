@@ -3,7 +3,6 @@
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
 from langchain.vectorstores import Chroma
-from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
 from datasets import load_dataset
 from langchain.document_loaders import PyPDFDirectoryLoader, DirectoryLoader
 import os 
@@ -29,30 +28,27 @@ def read_txt(directory_path):
                 data[file_name] = file.read()
     return data
 
-dataset_dict = load_dataset('HUPD/hupd',
-    name='sample',
-    data_files="https://huggingface.co/datasets/HUPD/hupd/blob/main/hupd_metadata_2022-02-22.feather", 
-    icpr_label=None,
-    train_filing_start_date='2016-01-01',
-    train_filing_end_date='2016-01-21',
-    val_filing_start_date='2016-01-22',
-    val_filing_end_date='2016-01-31',
-)
+def claims_list(claims):
+    text = ""
+    chunks = claims.split('청구항 ')[1:]
+    claims_list = ["청구항 " + chunk for chunk in chunks]
+    return claims_list
+
+solar_description = read_txt('data')["Description.txt"]
+claims = claims_list(read_txt('data')["Claims.txt"])
+claim_rule = read_txt('data')["ClaimRule.txt"]
+
 
 #Load PDF Example
 pdf_loader = PyPDFDirectoryLoader('/Users/alexkim/PatentAI/I4E4/data', glob = './*.pdf')
 pdf_documents = pdf_loader.load()
 
-#From Patent Dataset
-patent_samples = dataset_dict["train"][:100]["claims"]
-
 #Text문서를 Embedding Vector로 변환시켜줄 모델 
 embedding_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 #미국 특허 예제 문서를 Split
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap = 50)
-#pdf_samples = text_splitter.split_documents(pdf_documents)
-
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap = 100)
+pdf_samples = text_splitter.split_documents(pdf_documents)
 #list_texts = []
 #for sample in patent_samples:
     #Returns Document with pagecontent/ metadata 
@@ -61,10 +57,9 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap = 5
 
 #Chroma DB에 추출할때 사용할 Embedding Model과 Split된 문서 데이터 업로드
 #patent_db = Chroma.from_texts(list_texts, embedding_model)
-#pdf_db = Chroma.from_documents(pdf_samples, embedding_model)
+pdf_db = Chroma.from_documents(pdf_samples, embedding_model)
 
 
-solar = read_txt('data')["example2.txt"]
 
 
 
