@@ -4,7 +4,7 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import os 
 load_dotenv(find_dotenv()) 
 
-print(os.getenv("HUGGINGFACEHUB_API_TOKEN"))
+os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 
 def imagetotext(url):
@@ -22,3 +22,4 @@ def text2text(text):
 def document(url):
     model = pipeline("document-question-answering", model="magorshunov/layoutlm-invoices")
     response = model()
+

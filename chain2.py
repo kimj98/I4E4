@@ -1,6 +1,6 @@
 from dotenv import find_dotenv, load_dotenv
 from langchain.llms import OpenAI
-from dataload import retrieve, retrieval2text, patent_db
+from dataload import retrieve, retrieval2text, solar
 import os
 
 load_dotenv(find_dotenv()) 
@@ -22,7 +22,7 @@ def generate_output(input_dict):
     abstract = llm(prompt)
     output.abstract = abstract
 
-    promt = "Write how this invention will solve existing problem and the background context of invention"
+    promt = "Write how this invention will solve existing problem and the background context of invention.Use this description: {}"
     
     return output 
     
