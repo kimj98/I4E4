@@ -1,7 +1,7 @@
 from dotenv import find_dotenv, load_dotenv
 from langchain.llms import OpenAI
 import openai
-from dataload import retrieve, retrieval2text, solar_description, claims, text_splitter, claim_rule
+from dataload import retrieve, retrieval2text, solar_description, claims, abtract_rule, text_splitter, claim_rule
 import os
 from langchain.chains.summarize import load_summarize_chain
 
@@ -41,10 +41,14 @@ claims = claims
 output = GPT_Output()
 
 #요약
-prompt = "Write an abstract starting with: The present invention is... for a patent application of a invention titled {}. Use this description: {}.".format(title,description)
+prompt = "{} \n Here is the A: \n{}. \n Output B".format(claim_rule, claims[0])
+claim1 = response(prompt)
+print(claim1)
+prompt = "발명 제목: {}. 청구항: {}.".format(title,claim1)
 abstract= response(prompt)
 output.abstract = abstract
-
+print(abstract)
+""" 
 
 #기술분야 (Task 1)
 prompt = ""
@@ -80,6 +84,7 @@ output.stepstosovle = problem_solve
 prompt = ""
 effect = response(prompt)
 output.effect = effect 
+ """
 
  
 #비슷한 청구 내용 갖고오기 (DB퀄리티 따라서 좋은 답변)

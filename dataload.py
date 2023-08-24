@@ -37,6 +37,7 @@ def claims_list(claims):
 solar_description = read_txt('data')["Description.txt"]
 claims = claims_list(read_txt('data')["Claims.txt"])
 claim_rule = read_txt('data')["ClaimRule.txt"]
+abtract_rule = read_txt('data')['AbstractRule.txt']
 
 
 #Load PDF Example
@@ -45,7 +46,7 @@ pdf_documents = pdf_loader.load()
 
 #Text문서를 Embedding Vector로 변환시켜줄 모델 
 embedding_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-
+st
 #미국 특허 예제 문서를 Split
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap = 100)
 pdf_samples = text_splitter.split_documents(pdf_documents)
