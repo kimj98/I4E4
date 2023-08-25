@@ -1,7 +1,7 @@
 from dotenv import find_dotenv, load_dotenv
 from langchain.llms import OpenAI
 import openai
-from dataload import retrieve, retrieval2text,claims_list, solar_description, claims, abtract_rule, text_splitter, claim_rule
+from dataload import retrieve, retrieval2text,claims_list, solar_description, claims, abtract_rule, text_splitter, claim_rule, backgroundtip
 import os
 from langchain.chains.summarize import load_summarize_chain
 
