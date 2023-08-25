@@ -38,6 +38,7 @@ solar_description = read_txt('data')["Description.txt"]
 claims = claims_list(read_txt('data')["Claims.txt"])
 claim_rule = read_txt('data')["ClaimRule.txt"]
 abtract_rule = read_txt('data')['AbstractRule.txt']
+backgroundtip = read_txt('data')['BackgroundTip.txt']
 
 
 #Load PDF Example
