@@ -60,9 +60,25 @@ def generate_output(input_dict):
     output.backgroud = background 
 
     #배경기술 (Task 2) 
-    prompt = ""
-    background = response(prompt)
-    output.backgroud = background 
+    claim_num = len(claims)
+    claim_summary = []
+
+    first_half_claims = "\n".join(claims[:claim_num//2])
+    last_half_claims = "\n".join(claims[claim_num//2:])
+
+    prompt = "다음은 접이식 솔라셀 모듈 특허 명세서의 청구항들 절반이야. 각 내가 주어주는 청구항들을 읽고 요약해줘. \n {}".format(first_half_claims)
+    op = response(prompt)
+    claim_summary.append(op)
+    prompt = "나머지 반도 요약해줘: \n {}".format(last_half_claims)
+    op = response(prompt)
+    claim_summary.append(op)
+    summary_output = "\n".join(claim_summary)
+
+    prompt = "다음은 방금 너가 요약해준 청구항들이야. \n {} \n {} \n 이제 특허 명세서에 들어갈 배경기술을 작성해줘".format(summary_output, backgroundtip)
+    backg = response(prompt)
+    # output.background = backg
+
+    print(backg)
 
     #해결하려는 과제 (Improvement to be made)
 
