@@ -8,3 +8,7 @@ keras
 tensorflow
 chromadb
 wikipedia-api
+aiohttp  # for making API calls concurrently
+argparse  # for running script from command line
+asyncio  # for running API calls concurrently
+tiktoken  # for counting tokens

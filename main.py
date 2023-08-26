@@ -2,7 +2,10 @@ import streamlit as st
 import base64
 from PIL import Image
 from  chain_openai import generate_output
-
+def estimate_size(content):
+    # Count the number of lines in content
+    lines = content.count('\n') + 1
+    return lines
 st.markdown("""
     <style>
     body {
@@ -38,6 +41,7 @@ def download_page():
     backbutton = st.button(label="뒤로가기")
     if backbutton:
         st.session_state.page = 'combined'
+        st.experimental_rerun()
 
 def design_count_page():
     with st.form(key='count_form'):
@@ -50,9 +54,11 @@ def design_count_page():
         if count_submit_button:
             st.session_state.page = 'design_input'
             st.session_state.design_num = design_num
+            st.experimental_rerun()
         elif backbutton:
             st.session_state.page = 'main'
-
+            st.experimental_rerun()
+        
 def design_input_page():
     with st.form(key='design_input_form'):
         st.title("도면도 첨부")
@@ -71,9 +77,11 @@ def design_input_page():
             st.session_state.designs_info = designs
             st.session_state.designs_files = design_files
             st.session_state.page = 'combined' 
+            st.experimental_rerun()
 
         elif backbutton:
             st.session_state.page = 'count'
+            st.experimental_rerun()
 
 
 def combined_page():
@@ -90,30 +98,32 @@ def combined_page():
         st.title("Output 수정")
 
         sum_result2 = output_dic.abstract
-        user_sum2 = st.text_area("요약을 원하시는대로 수정해주세요", value=sum_result2)
+        user_sum2 = st.text_area("요약을 원하시는대로 수정해주세요", value=sum_result2, height = estimate_size(sum_result2))
         
-        claims_result2 = "수정 가능한 청구범위입니다"
-        user_claims2 = st.text_area("청구범위를 원하시는대로 수정해주세요", value=claims_result2)
+        claims_result2 = claim
+        user_claims2 = st.text_area("청구범위를 원하시는대로 수정해주세요", value=claim , height = estimate_size(claim))
 
         domain_result2 = "수정 가능한 기술분야입니다"
-        user_domain2 = st.text_area("기술분야를 원하시는대로 수정해주세요", value=domain_result2)
+        user_domain2 = st.text_area("기술분야를 원하시는대로 수정해주세요", value=domain_result2 , height = estimate_size(domain_result2))
 
         background_result2 = "수정 가능한 배경기술 입니다"
-        user_background2 = st.text_area("배경기술을 원하시는대로 수정해주세요", value=background_result2)
+        user_background2 = st.text_area("배경기술을 원하시는대로 수정해주세요", value=background_result2 , height = estimate_size(background_result2))
         
-        todo_result2 = "수정 가능한 해결하려는 과제입니다"
-        user_todo2 = st.text_area("해결하려는 과제 결과물을 원하시는대로 수정해주세요", value = todo_result2)
+        todo_result2 = output_dic.problem
+        user_todo2 = st.text_area("해결하려는 과제 결과물을 원하시는대로 수정해주세요", value = todo_result2, height = estimate_size(todo_result2))
 
-        method_result2 = "수정 가능한 해결수단입니다"
-        user_method2 = st.text_area("해결수단을 원하시는대로 수정해주세요", value=method_result2)
+        method_result2 = output_dic.stepstosovle
+        print(estimate_size(method_result2))
+        user_method2 = st.text_area("해결수단을 원하시는대로 수정해주세요", value=method_result2, height = estimate_size(method_result2))
         
         effect_result2 = "수정 가능한 발명의 효과입니다"
-        user_effect2 = st.text_area("발명의 효과를 원하시는대로 수정해주세요", value=effect_result2)
+        user_effect2 = st.text_area("발명의 효과를 원하시는대로 수정해주세요", value=effect_result2, height = estimate_size(effect_result2))
         
     #----1을 넣고 gpt로 돌린 다음 ----2를 output으로 보여주는 작업 필요함
         combined_submit_button = st.form_submit_button(label='제출')
         backbutton = st.form_submit_button(label="뒤로가기")
         if combined_submit_button:
+            st.experimental_rerun()
             st.session_state.sum_result2 = user_sum2
             st.session_state.claims_result2 = user_claims2
             st.session_state.domain_result2 = user_domain2
