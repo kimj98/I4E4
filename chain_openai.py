@@ -63,32 +63,31 @@ def generate_output(input_dict):
     prompt = ""
     background = response(prompt)
     output.backgroud = background 
-
+"""
     #해결하려는 과제 (Improvement to be made)
 
-    prompt = "This section is about What problem does this invention trying to solve? what benefit can this invention create? use this description{}. First write about the general usecase of the past/traditional models. Then say Don't explain how it does it, just in general term in korean" .format(description)
+    prompt = "This section is about What problem does this invention trying to solve? what benefit can this invention create? use this description{}. First write about the general usecase of the past/traditional models. Then say Don't explain how it does it, just in general term in korean" .format(tech_description)
     problem = response(prompt)
     output.problem = problem
-
 
     #과제 해결수단 (청구항의 문장 형태를 바꾸면됨)
     claim_num = len(claims)
     changed_claims = []
-
+ 
     for i in range(int(claim_num)):
-        claim_i = claims[i]
         prompt = "{} \n Here is the A: \n{}. \n Output B:".format(claim_rule, claims[i])
         changed = response(prompt)
         changed_claims.append(changed)
 
     problem_solve = "\n".join(changed_claims)
     output.stepstosovle = problem_solve
-
+    return output
+"""
     #발명의 효과 (Task 3)
     prompt = ""
     effect = response(prompt)
     output.effect = effect 
-    """
+    
 
     #비슷한 청구 내용 갖고오기 (DB퀄리티 따라서 좋은 답변)
     #patent_example = retrieve(prompt,patent_db,3)
@@ -101,6 +100,7 @@ def generate_output(input_dict):
     #input_token_estimation = len(prompt_with_text)/4
     #background=llm(prompt_with_text)
     #print(background)
-    return output
+    
 
-
+"""
+    
