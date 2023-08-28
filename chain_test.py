@@ -4,6 +4,8 @@ import openai
 from dataload import retrieve, retrieval2text, solar_description, claims, abtract_rule, text_splitter, claim_rule
 import os
 from langchain.chains.summarize import load_summarize_chain
+import asyncio, aiohttp
+
 
 class GPT_Output:
     def __init__(self):
@@ -23,7 +25,6 @@ class GPT_Output:
         self.effect = ""
 
 load_dotenv(find_dotenv()) 
-
 openai.organization = "org-MrDsrQoFKXtTofmqyBqdRdOA"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -34,6 +35,7 @@ def response(prompt):
     )
     return response["choices"][0].message.content
     
+
 
 title = "접이식 솔라 모듈"
 description = solar_description

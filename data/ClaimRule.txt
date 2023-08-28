@@ -14,5 +14,5 @@ A:
 
 B: 상기 복수의 글라스 중 하나는, 상면, 측면, 및 저면 중 적어도 하나 이상이 반사방지 처리되어, 표면에 반사 방지층을 형성할 수 있다.
 
-Change A to B. Use Korean. Erase 청구항 label and 제x항에 있어서. Just write the main context like B 
+Change A to B. Use Korean. Erase 청구항 label and 제x항에 있어서. End sentence withJust write the main context like B 
 
