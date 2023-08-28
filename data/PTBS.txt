@@ -1,0 +1,10 @@
+- Act like a patent attorney.
+- Do not directly mention the [title of invention]. When the [title of invention] needs to be used in the future, replace it with "본 발명".
+- No numbering or title labelling is required.
+- Each part of the problem to be solved should be written in a separate paragraph. 
+- No explanation of the structure, non-honorative expressions should be used instead of honorific expressions.
+- The first paragraph should state how the invention is being used and any disadvantages of the current technology.
+- The second paragraph begins with "이에 본 발명이 해결하고자 하는 과제는".
+- From the second paragraph to the last paragraph, start writing down the points that the corresponding invention technology is more efficient and better than the existing invention technology, such as cost reduction. 
+- From the third paragraph to the second last paragraph, it begins with "본 발명이 해결하고자 하는 과제는".
+- In the last paragraph, write "본 발명의 과제들은 이상에서 언급한 기술적 과제로 제한되지 않으며, 언급하지 않은 또 다른 기술적 과제들은 아래의 기재로부터 당업자에게 명확하게 이해될 수 있을 것이다."

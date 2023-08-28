@@ -2,10 +2,15 @@ import streamlit as st
 import base64
 from PIL import Image
 from  chain_openai import generate_output
-def estimate_size(content):
+from async_openai import generate_output_async
+import asyncio
+def estimate_size(content, min_height=100, max_height=500, line_height=20):
     # Count the number of lines in content
     lines = content.count('\n') + 1
-    return lines
+    estimated_height = lines * line_height
+
+    return max(min_height, min(estimated_height, max_height)*2)
+
 st.markdown("""
     <style>
     body {
@@ -92,7 +97,8 @@ def combined_page():
     designs_info = st.session_state.designs_info
     designs_files = st.session_state.designs_files
     input = User_Input(title, category, description, claim, designs_info, designs_files)
-    output_dic = generate_output(input)
+    #output_dic = generate_output(input)
+    output_dic = asyncio.run(generate_output_async(input))
     with st.form(key='combined_form'):
 
         st.title("Output 수정")
@@ -100,30 +106,27 @@ def combined_page():
         sum_result2 = output_dic.abstract
         user_sum2 = st.text_area("요약을 원하시는대로 수정해주세요", value=sum_result2, height = estimate_size(sum_result2))
         
-        claims_result2 = claim
         user_claims2 = st.text_area("청구범위를 원하시는대로 수정해주세요", value=claim , height = estimate_size(claim))
 
-        domain_result2 = "수정 가능한 기술분야입니다"
+        domain_result2 = output_dic.domain
         user_domain2 = st.text_area("기술분야를 원하시는대로 수정해주세요", value=domain_result2 , height = estimate_size(domain_result2))
 
-        background_result2 = "수정 가능한 배경기술 입니다"
+        background_result2 = output_dic.background
         user_background2 = st.text_area("배경기술을 원하시는대로 수정해주세요", value=background_result2 , height = estimate_size(background_result2))
         
         todo_result2 = output_dic.problem
         user_todo2 = st.text_area("해결하려는 과제 결과물을 원하시는대로 수정해주세요", value = todo_result2, height = estimate_size(todo_result2))
 
         method_result2 = output_dic.stepstosovle
-        print(estimate_size(method_result2))
         user_method2 = st.text_area("해결수단을 원하시는대로 수정해주세요", value=method_result2, height = estimate_size(method_result2))
         
-        effect_result2 = "수정 가능한 발명의 효과입니다"
+        effect_result2 = output_dic.effect
         user_effect2 = st.text_area("발명의 효과를 원하시는대로 수정해주세요", value=effect_result2, height = estimate_size(effect_result2))
         
     #----1을 넣고 gpt로 돌린 다음 ----2를 output으로 보여주는 작업 필요함
         combined_submit_button = st.form_submit_button(label='제출')
         backbutton = st.form_submit_button(label="뒤로가기")
         if combined_submit_button:
-            st.experimental_rerun()
             st.session_state.sum_result2 = user_sum2
             st.session_state.claims_result2 = user_claims2
             st.session_state.domain_result2 = user_domain2
@@ -132,6 +135,7 @@ def combined_page():
             st.session_state.method_result2 = user_method2
             st.session_state.effect_result2 = user_effect2
             st.session_state.page = 'download'
+            st.experimental_rerun()
         elif backbutton:
             st.session_state.page = 'design_input'
 
@@ -148,7 +152,7 @@ def main():
         patent_title = st.text_input('특허품 명칭')
         patent_category = st.selectbox('특허의 분류', PATENT_CATEGORIES)
         claim = st.text_area('청구항')
-        tech_description = st.text_area('발명 내용')
+        tech_description = st.text_area('발명 내용', height = 50)
         submit_button = st.form_submit_button(label='다음')
 
         if submit_button:
@@ -158,6 +162,7 @@ def main():
             st.session_state.patent_category = patent_category
             st.session_state.claim = claim
             st.session_state.tech_description = tech_description
+            st.experimental_rerun()
 
 if __name__ == "__main__":
     if "page" in st.session_state:

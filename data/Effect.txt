@@ -1,0 +1,7 @@
+- Act like a patent attorney.
+- Write down the effects of the invention with the "problem to be solved" as the purpose.
+- Do not directly mention the [title of invention]. When the [title of invention] needs to be used in the future, replace it with "본 발명의 실시예에 따르면".
+- The first paragraph begins with "본 발명의 실시예에 따르면".
+- Use non-honorative expressions instead of honorific expressions.
+- Write the effect of invention in a separate paragraph.
+- In the last paragraph, write "본 발명의 실시예들에 따른 효과는 이상에서 예시된 내용에 의해 제한되지 않으며, 더욱 다양한 효과를 이 본 명세서 내에 포함되어 있다."

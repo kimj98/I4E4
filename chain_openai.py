@@ -3,7 +3,9 @@ from langchain.llms import OpenAI
 import openai
 from dataload import retrieve, retrieval2text,claims_list, solar_description, claims, abtract_rule, text_splitter, claim_rule
 import os
-from langchain.chains.summarize import load_summarize_chain
+import time
+
+
 
 class GPT_Output:
     def __init__(self):
@@ -36,6 +38,7 @@ def response(prompt):
 
 
 def generate_output(input_dict):
+    start_time = time.time()
     output = GPT_Output()
     patent_title = input_dict.patent_title
     patent_category = input_dict.patent_category
@@ -47,23 +50,20 @@ def generate_output(input_dict):
     #요약
     prompt = "{} \n Here is the A: \n{}. \n Output B".format(claim_rule, claims[0])
     claim1 = response(prompt)
-    print(claim1)
     prompt = "{}. 발명 제목: {}. 청구항: {}.".format(abtract_rule,patent_title,claim1)
     abstract= response(prompt)
     output.abstract = abstract
-    print(abstract)
-    """ 
+ 
 
     #기술분야 (Task 1)
-    prompt = ""
+    prompt = "Write what {} is about in one sentence using Korean".format(patent_title)
     background = response(prompt)
     output.backgroud = background 
 
     #배경기술 (Task 2) 
-    prompt = ""
+    prompt = "What is background information about {}. In korean".format(patent_title)
     background = response(prompt)
     output.backgroud = background 
-"""
     #해결하려는 과제 (Improvement to be made)
 
     prompt = "This section is about What problem does this invention trying to solve? what benefit can this invention create? use this description{}. First write about the general usecase of the past/traditional models. Then say Don't explain how it does it, just in general term in korean" .format(tech_description)
@@ -81,12 +81,16 @@ def generate_output(input_dict):
 
     problem_solve = "\n".join(changed_claims)
     output.stepstosovle = problem_solve
-    return output
-"""
+
     #발명의 효과 (Task 3)
-    prompt = ""
+    prompt = "what would be the effect of inventing this {} using {}".format(patent_title,tech_description)
     effect = response(prompt)
     output.effect = effect 
+    end_time = time.time()
+    print(f"Execution time: {end_time - start_time:.2f} seconds")
+  
+
+    return output
     
 
     #비슷한 청구 내용 갖고오기 (DB퀄리티 따라서 좋은 답변)
@@ -102,5 +106,4 @@ def generate_output(input_dict):
     #print(background)
     
 
-"""
     
