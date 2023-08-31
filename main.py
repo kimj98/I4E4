@@ -4,6 +4,9 @@ from PIL import Image
 from  chain_openai import generate_output
 from async_openai import generate_output_async
 import asyncio
+from pdfgen import generate_pdf, get_pdf_download_link
+
+
 def estimate_size(content, min_height=100, max_height=500, line_height=20):
     # Count the number of lines in content
     lines = content.count('\n') + 1
@@ -41,8 +44,9 @@ def get_pdf_download_link(file_name):
 
 def download_page():
     st.title("Preview:")
-    show_pdf('모범 명세서.pdf')
-    st.markdown(get_pdf_download_link('모범 명세서.pdf'), unsafe_allow_html = True)
+    pdf_data = st.session_state.pdf_data 
+    st.download_button("Download PDF", pdf_data, file_name="output.pdf", mime="application/pdf")
+  
     backbutton = st.button(label="뒤로가기")
     if backbutton:
         st.session_state.page = 'combined'
@@ -104,36 +108,31 @@ def combined_page():
         st.title("Output 수정")
 
         sum_result2 = output_dic.abstract
-        user_sum2 = st.text_area("요약을 원하시는대로 수정해주세요", value=sum_result2, height = estimate_size(sum_result2))
+        output_dic.abstract = st.text_area("요약을 원하시는대로 수정해주세요", value=sum_result2, height = estimate_size(sum_result2))
         
-        user_claims2 = st.text_area("청구범위를 원하시는대로 수정해주세요", value=claim , height = estimate_size(claim))
+        output_dic.claims = st.text_area("청구범위를 원하시는대로 수정해주세요", value=claim , height = estimate_size(claim))
 
         domain_result2 = output_dic.domain
-        user_domain2 = st.text_area("기술분야를 원하시는대로 수정해주세요", value=domain_result2 , height = estimate_size(domain_result2))
+        output_dic.domain = st.text_area("기술분야를 원하시는대로 수정해주세요", value=domain_result2 , height = estimate_size(domain_result2))
 
         background_result2 = output_dic.background
-        user_background2 = st.text_area("배경기술을 원하시는대로 수정해주세요", value=background_result2 , height = estimate_size(background_result2))
+        output_dic.background = st.text_area("배경기술을 원하시는대로 수정해주세요", value=background_result2 , height = estimate_size(background_result2))
         
         todo_result2 = output_dic.problem
-        user_todo2 = st.text_area("해결하려는 과제 결과물을 원하시는대로 수정해주세요", value = todo_result2, height = estimate_size(todo_result2))
+        output_dic.problem = st.text_area("해결하려는 과제 결과물을 원하시는대로 수정해주세요", value = todo_result2, height = estimate_size(todo_result2))
 
-        method_result2 = output_dic.stepstosovle
-        user_method2 = st.text_area("해결수단을 원하시는대로 수정해주세요", value=method_result2, height = estimate_size(method_result2))
+        method_result2 = output_dic.stepstosolve
+        output_dic.stepstosolve = st.text_area("해결수단을 원하시는대로 수정해주세요", value=method_result2, height = estimate_size(method_result2))
         
         effect_result2 = output_dic.effect
-        user_effect2 = st.text_area("발명의 효과를 원하시는대로 수정해주세요", value=effect_result2, height = estimate_size(effect_result2))
+        output_dic.effect = st.text_area("발명의 효과를 원하시는대로 수정해주세요", value=effect_result2, height = estimate_size(effect_result2))
         
     #----1을 넣고 gpt로 돌린 다음 ----2를 output으로 보여주는 작업 필요함
         combined_submit_button = st.form_submit_button(label='제출')
         backbutton = st.form_submit_button(label="뒤로가기")
         if combined_submit_button:
-            st.session_state.sum_result2 = user_sum2
-            st.session_state.claims_result2 = user_claims2
-            st.session_state.domain_result2 = user_domain2
-            st.session_state.background_result2 = user_background2
-            st.session_state.todo_result2 = user_todo2
-            st.session_state.method_result2 = user_method2
-            st.session_state.effect_result2 = user_effect2
+            pdf_data = generate_pdf(output_dic)
+            st.session_state.pdf_data = pdf_data
             st.session_state.page = 'download'
             st.experimental_rerun()
         elif backbutton:

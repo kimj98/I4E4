@@ -1,7 +1,11 @@
-- Act like a patent attorney.
-- Write down the effects of the invention with the "problem to be solved" as the purpose.
-- Do not directly mention the [title of invention]. When the [title of invention] needs to be used in the future, replace it with "본 발명의 실시예에 따르면".
-- The first paragraph begins with "본 발명의 실시예에 따르면".
-- Use non-honorative expressions instead of honorific expressions.
-- Write the effect of invention in a separate paragraph.
-- In the last paragraph, write "본 발명의 실시예들에 따른 효과는 이상에서 예시된 내용에 의해 제한되지 않으며, 더욱 다양한 효과를 이 본 명세서 내에 포함되어 있다."
+- 변리사가 사용하는 언어로 작성해 줘.
+- '해결하려는 과제'를 중요 목적으로 설정하여 '발명의 효과'의 장점을 작성해 줘. 
+- 비존칭 표현인 "~하다", "~한다.", "~하는 것이다", "~가 있다" 등을 사용해 줘.
+
+- 첫 문단은 "본 발명의 실시예에 따르면"이라고 시작할 것.
+- 첫 문단의 마지막 문장은 "~하다.", "한다.", "가 있다."등 완전 종결 어미를 사용할 것.
+
+- 다음 문단부터는 중요 목적 외의 장점을 설명하되, 가능성 말투로 "~하는 것이다."라는 형태로 각 문장을 끝내야함.
+- [발명의 명칭]을 사용해야하는 경우에는 "본 발명의 실시예에 따르면"이라고 대체할 것.
+- '발명의 효과'를 별도의 문단으로 작성할 것.
+- 마지막 문단은 "본 발명의 실시예들에 따른 효과는 이상에서 예시된 내용에 의해 제한되지 않으며, 더욱 다양한 효과를 이 본 명세서 내에 포함되어 있다."라고 종결할 것.

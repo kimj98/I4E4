@@ -1,10 +1,11 @@
-- Act like a patent attorney.
-- Do not directly mention the [title of invention]. When the [title of invention] needs to be used in the future, replace it with "본 발명".
-- No numbering or title labelling is required.
-- Each part of the problem to be solved should be written in a separate paragraph. 
-- No explanation of the structure, non-honorative expressions should be used instead of honorific expressions.
-- The first paragraph should state how the invention is being used and any disadvantages of the current technology.
-- The second paragraph begins with "이에 본 발명이 해결하고자 하는 과제는".
-- From the second paragraph to the last paragraph, start writing down the points that the corresponding invention technology is more efficient and better than the existing invention technology, such as cost reduction. 
-- From the third paragraph to the second last paragraph, it begins with "본 발명이 해결하고자 하는 과제는".
-- In the last paragraph, write "본 발명의 과제들은 이상에서 언급한 기술적 과제로 제한되지 않으며, 언급하지 않은 또 다른 기술적 과제들은 아래의 기재로부터 당업자에게 명확하게 이해될 수 있을 것이다."
+- [발명의 명칭] 대신 "본 발명"이라는 명칭으로 기재할 것.
+- 존칭 표현인 "~합니다", "~있습니다" 대신, 비존칭 표현인 "~하다", "~한다.", "~하는 것이다", "~가 있다" 등을 사용할 것. 
+- 절대 각 문단의 번호 매기기와 단락 나누기를 하지 말 것.
+- 해결하려는 첫번째 과제는 "목적"에 치중된 내용이어야함.
+- 작성할 때 전문가의 수준에서 사용되는 고급 단어로 작성할 것. 
+
+아래는 각 문단에 담겨야할 내용이야.
+- 첫 번째 문단부터 발명의 기존 기술의 간단한 기술 설명과 보편적으로 어떻게 사용되고 있는지에 대해 서술해. 덧붙여서 현재 기술에 관한 단점을 상세하게 적어줘. (최소 170자 이상.)
+- 다음 문단은 "이에 본 발명이 해결하고자 하는 과제는"으로 시작할 것. 현재 기술의 단점을 1:1 상관 관계되어 해결 할 수 있는 구체적인 방안을 마련할 것. 다만, 가능성의 말투 "~하는 것이다." 라는 형태로 문단을 끝내야함. (최소 200자 이상. )
+-  그 다음 문단부터 마지막에서 두 번째 문단까지는 "본 발명이 해결하고자 하는 다른 과제는"으로 시작할 것. 내용 비용 절감과 같이 해당 발명이 기존 발명 기술보다 더 효율적이고, 더 나은 점들을 적을 것. 하나 이상 일 경우, 단락을 나눠야함.
+- 마지막 문단으로 "본 발명의 과제들은 이상에서 언급한 기술적 과제로 제한되지 않으며, 언급하지 않은 또 다른 기술적 과제들은 아래의 기재로부터 당업자에게 명확하게 이해될 수 있을 것이다."라고 기재할 것.
