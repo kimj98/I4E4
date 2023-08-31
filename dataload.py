@@ -38,15 +38,15 @@ solar_description = read_txt('data')["Description.txt"]
 claims = claims_list(read_txt('data')["Claims.txt"])
 claim_rule = read_txt('data')["ClaimRule.txt"]
 abtract_rule = read_txt('data')['AbstractRule.txt']
-
+ptbs_format = read_txt("data")["PTBS.txt"]
+effect_format = read_txt("data")["Effect.txt"]
+background_format = read_txt("data")["Background.txt"]
 
 #Load PDF Example
 pdf_folder = '/Users/alexkim/PatentAI/I4E4/pdf/'
 #print([i for i in os.listdir(pdf_folder) if i.endswith('.pdf')])
 pdf_loader = [PyPDFLoader(pdf_folder + fn).load() for fn in os.listdir(pdf_folder) if fn.endswith('.pdf')] 
 doc_list = [item for sublist in pdf_loader for item in sublist]
-ptbs_format = read_txt("data")["PTBS.txt"]
-effect_format = read_txt("data")["Effect.txt"]
 
 #Text문서를 Embedding Vector로 변환시켜줄 모델 
 embedding_model = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
@@ -56,7 +56,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap = 
 
 #Input list of documents with pdf document by pages. (PDFs with 30 pages = 30 documents)
 
-pdf_samples = text_splitter.split_documents(doc_list)
+#pdf_samples = text_splitter.split_documents(doc_list)
 #list_texts = []
 #for sample in patent_samples: """
     #Returns Document with pagecontent/ metadata 
@@ -67,7 +67,8 @@ pdf_samples = text_splitter.split_documents(doc_list)
 
 #patent_db = Chroma.from_texts(list_texts, embedding_model)
 
-patent_db = Chroma.from_documents(pdf_samples, embedding_model)
+
+patent_db = Chroma.from_documents(doc_list, embedding_model)
 
 #print(pdf_samples) 
 
